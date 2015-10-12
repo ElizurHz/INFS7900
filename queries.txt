@@ -1,0 +1,19 @@
+a.
+SELECT `booking`.*, `type-name`, `number-of-rooms`, `amount` FROM `booking`,`room-booking-detail` WHERE `guest-type` = 'group' and (20150501 <= `date-of-booking` and `date-of-booking` <= 20150531) and `booking`.`booking-id` = `room-booking-detail`.`booking-id`
+
+b.
+SELECT DISTINCT `service-name` FROM `service`
+
+c.
+SELECT DISTINCT `acc-name` FROM `accommodation`, `room-type`
+WHERE `acc-address` like '%Toowoomba%' and `room-type`.`bedrooms` = 2
+
+d.
+SELECT `guest-name`, `acc-name`, `payment-method`, SUM(`amount`) as `amount`
+FROM `room-booking-detail`, `booking`, `guest`, `accommodation`
+WHERE `booking`.`booking-id` = `room-booking-detail`.`booking-id` and `booking`.`guest-id` = `guest`.`guest-id` and `booking`.`acc-id` = `accommodation`.`acc-id`
+GROUP BY `room-booking-detail`.`booking-id`
+
+e.
+SELECT SUM(`number-of-people`) FROM `booking`, `accommodation`
+WHERE `acc-name` = 'Shangri-La Hotel Sydney' and (`check-in-date` <= 20151005 and `check-out-date` >= 20151005)
